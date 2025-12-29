@@ -20,3 +20,4 @@ document.getElementById("experience").addEventListener("blur", function() {
         msgElem.textContent = "Experience is valid.";
     }
 });
+
