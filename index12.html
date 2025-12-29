@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Job Application Form</title>
+    <style>
+        body { font-family: sans-serif; margin: 20px; }
+        .error-msg { color: red; font-size: 0.8em; margin-top: 5px; }
+        #result { margin-top: 20px; font-weight: bold; }
+    </style>
+</head>
+<body>
+
+<h2>Job Application Form</h2>
+
+<form id="applicationForm">
+    <div>
+        <label for="tckn">TCKN</label><br>
+        <input type="text" id="tckn" name="tckn" placeholder="11-digit Turkish ID number" required>
+    </div>
+    <br>
+
+    <div>
+        <label for="fullName">Full Name</label><br>
+        <input type="text" id="fullName" name="fullName" placeholder="Name Surname" required>
+    </div>
+    <br>
+
+    <div>
+        <label for="dob">Date of Birth</label><br>
+        <input type="date" id="dob" name="dob" required>
+    </div>
+    <br>
+
+    <div>
+        <label>Gender</label><br>
+        <input type="radio" id="male" name="gender" value="Male" required>
+        <label for="male">Male</label><br>
+        <input type="radio" id="female" name="gender" value="Female" required>
+        <label for="female">Female</label>
+    </div>
+    <br>
+
+    <div>
+        <label for="salaryAmount">Salary Expectation</label><br>
+        <input type="number" id="salaryAmount" name="salaryAmount" placeholder="Monthly amount" required>
+    </div>
+    <br>
+
+    <div>
+        <label for="experience">Years of Experience</label><br>
+        <input type="number" id="experience" name="experience" placeholder="0 or more" required>
+    </div>
+    <br>
+
+    <div>
+        <button type="submit">Submit Application</button>
+    </div>
+</form>
+
+<p id="result"></p>
+
+<script src="TCKN_validation.js"></script>
+<script src="FullName_validation.js"></script>
+<script src="DOB_validation.js"></script>
+<script src="Salary_validation.js"></script>
+<script src="Experience_validation.js"></script>
+
+<script>
+    document.getElementById("applicationForm").addEventListener("submit", function (event) {
+        event.preventDefault(); // Formun sayfayı yenilemesini durdurur
+        
+        // Formdaki verileri topluyoruz
+        const tckn = document.getElementById("tckn").value;
+        const fullName = document.getElementById("fullName").value;
+        const dob = document.getElementById("dob").value;
+        const salary = document.getElementById("salaryAmount").value;
+        const experience = document.getElementById("experience").value;
+        const resultElem = document.getElementById("result");
+
+        // VALIDATION KONTROLLERİ (Ayrı JS dosyalarındaki fonksiyonları çağırıyoruz)
+        if (!validateTCKN(tckn)) {
+            alert("Hata: TCKN geçersiz!");
+        } else if (!isValidFullName(fullName)) {
+            alert("Hata: Full Name en az 6 karakter olmalı ve rakam içermemeli!");
+        } else if (!isValidDOB(dob)) {
+            alert("Hata: Yaş 18 ile 35 arasında olmalıdır!");
+        } else if (!isValidSalary(salary)) {
+            alert("Hata: Maaş beklentisi negatif olamaz!");
+        } else if (!isValidExperience(experience, dob)) {
+            alert("Hata: Deneyim süresi (Yaş - 10) kuralına uymalıdır!");
+        } else {
+            // Tüm kontroller başarıyla geçtiyse
+            resultElem.textContent = "TEBRİKLER! Tüm dosyalar birleşti ve form başarıyla gönderildi.";
+            resultElem.style.color = "green";
+        }
+    });
+</script>
+
+</body>
+</html>
