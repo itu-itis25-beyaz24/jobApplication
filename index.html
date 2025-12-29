@@ -34,7 +34,6 @@
 
     <br>
 
-    <!-- Date of Birth (Required) -->
     <div>
         <label for="dob">Date of Birth</label><br>
         <input type="date"
@@ -133,6 +132,39 @@
             "Form submitted. Va lidation result will be displayed here.";
     });
 </script>
+<script src="TCKN_validation.js"></script>
+    <script src="FullName_validation.js"></script>
+    <script src="DOB_validation.js"></script>
+    <script src="Salary_validation.js"></script>
+    <script src="Experience_validation.js"></script>
 
+    <script>
+        document.getElementById("applicationForm").addEventListener("submit", function (event) {
+            event.preventDefault();
+            
+            const tckn = document.getElementById("tckn").value;
+            const fullName = document.getElementById("fullName").value;
+            const dob = document.getElementById("dob").value;
+            const salary = document.getElementById("salaryAmount").value;
+            const experience = document.getElementById("experience").value;
+
+            // Dış dosyalardaki fonksiyonları çağırıyoruz
+            if (!validateTCKN(tckn)) {
+                alert("Hata: TCKN geçersiz!");
+            } else if (!isValidFullName(fullName)) {
+                alert("Hata: Geçersiz isim (En az 6 karakter ve rakam içermemeli)!");
+            } else if (!isValidDOB(dob)) {
+                alert("Hata: Yaş 18-35 arasında olmalı!");
+            } else if (!isValidSalary(salary)) {
+                alert("Hata: Maaş negatif olamaz!");
+            } else if (!isValidExperience(experience, dob)) {
+                alert("Hata: Deneyim süresi yaştan büyük olamaz!");
+            } else {
+                document.getElementById("result").textContent = "TEBRİKLER! Form başarıyla birleşti ve gönderildi.";
+                document.getElementById("result").style.color = "green";
+            }
+        });
+    </script>
 </body>
 </html>
+
